@@ -26,6 +26,14 @@ INSTALLED_APPS = (
     "nosql_objects",
     ...
 )
+
+AUTHENTICATION_BACKENDS = (
+    ...
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    ...
+)
+
 ```
 
 - Add the following routes in urls.py:
@@ -48,6 +56,9 @@ Object classes define the types of objects that can be created in your applicati
 These types are analogous to models in Django and tables in a database, and their main purpose is to delimit the schema of your objects when querying.
 The declaration of this classes can be done trough the admin portal of Django.
 
+# Authentication
+Is recomended to add django-
+
 # Creating new objects
 Authorized users can create new objects like this:
 ```bash
@@ -55,18 +66,43 @@ curl -X POST -H "Content-Type: application/json" -d {{'{"object_class":"myClass"
 ```
 
 # Querying
-Clients can query their objects by filtering 
-
-
+Clients can only query objects they read permission assigned. 
+The following query will list all objects visible by the user:
+```bash
+curl http://yourdomain.com/api/objects/
+```
 
 ## By class
+
 
 ## Custom filtering
 
 ## Pagination
-Pagination is used to limit the amount of results returns while querying
+Pagination is used to limit the amount of results returned in querying requests. 
+All the results contain the following structure:
+```json
+{
+    "count": 5,
+    "next": "https://api.example.org/accounts/?limit=100&offset=500",
+    "previous": "https://api.example.org/accounts/?limit=100&offset=300",
+    "results": [
+       {
+        "object_class": "scores",
+        "created_by": 1,
+        "updated_by": 1,
+        "created_at": "...",
+        "updated_at": "...",
+        "version": 1,
+        "data": { 
+            "level1": 350
+        }
+       }
+    ]
+}
+```
 
 # Permissions
+Permissions are assigned to objects using django-guardian
 
 ## Groups
 

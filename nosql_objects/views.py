@@ -7,6 +7,7 @@ from rest_framework.permissions import DjangoObjectPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.pagination import LimitOffsetPagination
 from django.contrib.auth.models import Permission, Group
 from django.db.models import Q
 from django.conf import settings
@@ -18,6 +19,7 @@ from django.contrib.auth.models import User
 from .serializers import ObjectClassSerializer, ObjectSerializer, PermissionsSerializer
 from .models import Object, ObjectClass, ObjectUserObjectPermission
 from .permissions import ObjectPermissions, ReadOnlyPermission
+from .pagination import ObjectViewSetPagination
 
 
 class ObjectClassViewSet(viewsets.ModelViewSet):
@@ -29,6 +31,7 @@ class ObjectClassViewSet(viewsets.ModelViewSet):
 class ObjectViewSet(viewsets.ModelViewSet):
     serializer_class = ObjectSerializer
     queryset = Object.objects.all()
+    pagination_class = ObjectViewSetPagination
     permission_classes = [ObjectPermissions|ReadOnlyPermission]
     filter_backends = [filters.ObjectPermissionsFilter]
 
