@@ -1,5 +1,6 @@
 # Django NoSQL objects
 Django app that provides a simple REST API for storing and querying JSON documents.
+Notice that the word "document" and "object" are used interchangeably in this readme.
 
 # Features
 - Storing, querying, deleting schemaless JSON documents.
@@ -72,7 +73,7 @@ The following query will list all objects visible by the user:
 curl http://yourdomain.com/api/objects/
 ```
 
-## By class
+## Filter by class
 Retriving objects on a class can be done by appending the class name in the query parameters:
  ```bash
 curl http://yourdomain.com/api/objects/?object_class=my_class_name
@@ -82,7 +83,41 @@ Or with the unique ID of the class:
 curl http://yourdomain.com/api/objects/?object_class=2
 ```
 
-## Custom filtering
+## Filter by object contents
+Objects can be filtered by their content using the same Django syntax used for JSON fields, but passed as an object whose properties will be transformed into Django filters. For example the following code will bring all objects that have a property "myInfo" with a value of "test_value":
+```bash
+curl -H "Content-Type: application/json" -d {{'{"query":{"myInfo":"test_value"} }'}} {{http://yourdomain.com/api/objects/1/perms/}}
+```
+The querying filters can be appended with the following JSON filters to change behaviour:
+
+|Name | Description | Example
+| --- | --- | --- |
+|__isnull|Checks if the value of the property is null| "propName__isnull":false
+|__icontains|Case-insensitive containment test|"propName__icontains":"hello"
+|__endswith|Case-sensitive ends-with.|"propName__endswith":"world"
+|__iendswith|Case-insensitive ends-with.|"propName__iendswith":"World"
+|__iexact|Case-insensitive exact match.|"propName__iexact":"hello world"
+|__regex|Case-sensitive regular expression match|"propName__regex":false
+|__iregex|Case-insensitive regular expression match|"propName__iregex":false
+|__startswith|Case-sensitive starts-with|"propName__startswith":"Hello "
+|__istartswith|Case-insensitive starts-with|"propName__istartswith":"hel"
+|__lt|Number is less than|"propName__lt":4
+|__lte|Number is less than or equal|"propName__lte":5
+|__gt|Number is grater than|"propName__gt":4
+|__gte|Number is greater than or equal|"propName__gte":5
+
+Property queries can be nested by chaining the properties with double underscore before any filters, like this:
+```json
+{
+  "prop_example__isnull": false,
+  "prop_example__child_prop__endswith": " title",  
+}
+```
+
+Detailed info, caveats of the query system and some additional DB specific filters can be found [Django's documentation](https://docs.djangoproject.com/en/4.1/topics/db/queries/#querying-jsonfield).
+
+*Warning*: Don't name properties of your documents with the same names as the filters, behavior is not documented yet.
+
 
 ## Pagination
 Pagination is used to limit the amount of results returned in querying requests. 
@@ -142,4 +177,4 @@ The endpoint expects a json with the list of permissions with the users, groups 
 }
 ```
 
-Notice that the anonymous user can only be assigned the permission of view, an existing user is required for any other permission.
+Notice that the anonymous user can only be assigned the permission of view, an existing user is required for any other type of permission.
