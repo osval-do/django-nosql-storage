@@ -24,19 +24,19 @@ class ObjectsTestCase(TestCase):
     userAdmin: AbstractBaseUser
     objectClassA: ObjectClass
     objectClassB: ObjectClass
-    userAnon: Client
+    userAnon: Client    
     
 
     def setUp(self):
         # General setup
-        userModel = User.objects
+        userModel = User.objects        
         
         # Create object groups
         object_contentType = ContentType.objects.get(
-            app_label="baas_objects", model="object"
+            app_label="nosql_objects", model="object"
         )
         objectClass_contentType = ContentType.objects.get(
-            app_label="baas_objects", model="objectclass"
+            app_label="nosql_objects", model="objectclass"
         )
         access_objects_group = Group.objects.create(name="objects")
         user_subgroup = Group.objects.create(name="user_subgroup")

@@ -1,9 +1,6 @@
 import json
 from django.dispatch import receiver
-from django.contrib.sessions.models import Session
-from django.contrib.admin.models import LogEntry
 from django.db.models.signals import pre_save
-from django.core import serializers
 import sys
 from .models import Object
 

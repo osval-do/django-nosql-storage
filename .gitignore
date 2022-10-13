@@ -14,11 +14,13 @@ pep8.txt
 *.db
 *.tmp
 virtualenv
+.venv
 .DS_Store
+db.sqlite3
 
 htmlcov/
 .tox/
 .coverage
 .coverage.*
 coverage.xml
-
+.vscode

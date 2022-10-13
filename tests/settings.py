@@ -11,17 +11,25 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 TESTING = True
 
 INSTALLED_APPS = (
-    "django.contrib.contenttypes",
-    "django.contrib.staticfiles",
-    "django.contrib.auth",
-    "rest_framework",
-    "django_filters",
-    "guardian"
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',   
+    'guardian',
     "nosql_objects",
 )
 
-
-MIDDLEWARE = []
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+]
 
 ROOT_URLCONF = 'tests.urls'
 
@@ -29,6 +37,14 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "APP_DIRS": True,
+        "OPTIONS": {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     }
 ]
 
@@ -71,4 +87,20 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend',
 )
+
+# SECRET KEY
+SECRET_KEY = 'k-$osqzxZa9287y1_fpe943)m20*&^&9*4%$p87^q#pc2a!t'
+
+DATABASES = {
+    'default': {}
+}
+
+DATABASES['default'].update(dj_database_url.config(default='sqlite:///db.sqlite3'))
+
+# JWT settings
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+SIMPLE_JWT = {
+    'ALGORITHM': 'RS512',
+    'SIGNING_KEY': 'testing'
+}
 
