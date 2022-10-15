@@ -193,10 +193,10 @@ class ObjectsTestCase(TestCase):
 
         objectAnon = {"object_class": "classA", "data": {}}
         request = self.userAnon.post("/api/objects/", objectAnon, content_type="application/json")
-        self.assertEqual(request.status_code, 401, "no object creation for anonymous user")
+        self.assertNotEqual(request.status_code, 200, "no object creation for anonymous user")
 
         request = self.userAnon.patch("/api/objects/"+str(objectA['id'])+"/", objectAnon, content_type="application/json")
-        self.assertEqual(request.status_code, 401, "no object update for anonymous user")
+        self.assertNotEqual(request.status_code, 200, "no object update for anonymous user")
         
         perms = {
             "view_object": {

@@ -1,0 +1,8 @@
+django-filter
+django-guardian
+djangorestframework
+djangorestframework-guardian
+unittest-xml-reporting
+pytest
+pytz
+coverage

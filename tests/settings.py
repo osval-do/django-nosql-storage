@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-import dj_database_url
 import sys
 
 # Setup paths
@@ -18,7 +17,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt',   
     'guardian',
     "nosql_objects",
 )
@@ -75,7 +73,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         "rest_framework.authentication.SessionAuthentication",
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -92,10 +90,12 @@ AUTHENTICATION_BACKENDS = (
 SECRET_KEY = 'k-$osqzxZa9287y1_fpe943)m20*&^&9*4%$p87^q#pc2a!t'
 
 DATABASES = {
-    'default': {}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3'
+    }
 }
 
-DATABASES['default'].update(dj_database_url.config(default='sqlite:///db.sqlite3'))
 
 # JWT settings
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html

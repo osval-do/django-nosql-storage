@@ -1,4 +1,5 @@
 import json
+from typing import Any
 from urllib import request
 from django.shortcuts import render
 from rest_framework import viewsets, generics
@@ -35,7 +36,7 @@ class ObjectViewSet(viewsets.ModelViewSet):
     permission_classes = [ObjectPermissions|ReadOnlyPermission]
     filter_backends = [filters.ObjectPermissionsFilter]
 
-    def get_queryset(self):
+    def get_queryset(self) -> queryset:
         query_set = super().get_queryset()
         # Filter by class
         if 'object_class' in self.request.query_params:
@@ -58,19 +59,18 @@ class ObjectViewSet(viewsets.ModelViewSet):
                 query_set = query_set.filter(**{param_key:params[param_key]})
         return query_set
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer) -> None:
         """
         Sets the user creating the object
         """
         serializer.validated_data["created_by"] = self.request.user
         serializer.validated_data["updated_by"] = self.request.user
-        ret = super().perform_create(serializer)
-        return ret
+        super().perform_create(serializer)
 
     @action(detail=True, methods=['POST'])
-    def perms(self, request, pk=None):    
+    def perms(self, request, pk=None) -> Response:    
         """
-        Changes the permissions on the query object
+        Endpoint for modifying the permissions on an object
         """
         object = self.get_queryset().get(pk=pk)
         if not self.request.user.has_perm('change_object', object):

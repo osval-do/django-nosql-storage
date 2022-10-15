@@ -3,12 +3,9 @@ import sys
 
 from setuptools import find_packages, setup
 
-# FIXME: Main module requires django to be present, so cannot run setup.py in
-# clean environment.
-# from django_filters import __version__
-__version__ = "22.1"
+__version__ = "1.0"
 
-f = open("README.rst")
+f = open("README.md")
 readme = f.read()
 f.close()
 
@@ -27,11 +24,10 @@ if sys.argv[-1] == "publish":
     sys.exit()
 
 setup(
-    name="django-filter",
+    name="django_nosql_objects",
     version=__version__,
     description=(
-        "Django-filter is a reusable Django application for allowing"
-        " users to filter querysets dynamically."
+        "Django_nosql_objects is an app for allowing users store JSON documents"
     ),
     long_description=readme,
     author="Osvaldo Molina",
@@ -39,7 +35,7 @@ setup(
     url="https://github.com/osval-do/django-nosql-objects/tree/main",
     packages=find_packages(exclude=["tests*"]),
     project_urls={
-        # "Documentation": "https://django-filter.readthedocs.io/en/main/",
+        "Documentation": "https://github.com/osval-do/django-nosql-objects",
         "Changelog": "https://github.com/osval-do/django-nosql-objects/blob/main/CHANGES.rst",
         "Bug Tracker": "https://github.com/osval-do/django-nosql-objects/issues",
         "Source Code": "https://github.com/osval-do/django-nosql-objects",
@@ -67,5 +63,9 @@ setup(
     python_requires=">=3.7",
     install_requires=[
         "Django>=3.2",
+        "django-guardian",
+        "djangorestframework-guardian",
+        "django-filter",
+        "djangorestframework",
     ],
 )
