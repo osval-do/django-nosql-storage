@@ -26,12 +26,12 @@ jobs:
           python -m pip install --upgrade pip setuptools
       - name: Install dependencies
         run: |
-          python -m pip install coverage tox tox-py unittest-xml-reporting
+          python -m pip install coverage tox tox-gh-actions unittest-xml-reporting
       - name: Run tox
         run: |
           python -m pip --version
           python -m tox --version
-          python -m tox --py current
+          tox
       - name: Coverage reporting
         run: |
           coverage combine
