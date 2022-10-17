@@ -63,9 +63,9 @@ setup(
     python_requires=">=3.7",
     install_requires=[
         "Django>=3.2",
+        "djangorestframework",
+        "django-filter",
         "django-guardian",
         "djangorestframework-guardian",
-        "django-filter",
-        "djangorestframework",
     ],
 )
