@@ -1,4 +1,4 @@
-# Django NoSQL user objects
+# Django NoSQL user document storage
 Django app that provides a simple REST API for storing and querying JSON documents.
 Designed specially for cases where model schema is too variable or where the frontend is
 in charge of the schema of the stored data (backend as a service).
