@@ -1,13 +1,15 @@
-# Django NoSQL objects
+# Django NoSQL user objects
 Django app that provides a simple REST API for storing and querying JSON documents.
+Designed specially for cases where model schema is too variable or where the frontend is
+in charge of the schema of the stored data (backend as a service).
 Notice that the word "document" and "object" are used interchangeably in this readme.
 
-# Features
+## Features
 - Storing, querying, deleting schemaless JSON documents.
 - Permission system that allows users define who can access their own documents.
 - Query objects by their contents.
 - Allow anonymous access to specific documents.
-- REST API
+- REST API 
 
 # Package requirements
 - django-filter
@@ -58,7 +60,7 @@ These types are analogous to models in Django and tables in a database, and thei
 The declaration of this classes can be done trough the admin portal of Django.
 
 # Authentication
-Is recomended to add django-
+The examples below aren't showing any authentication code, but is required you add one like rest_framework_simplejwt.
 
 # Creating new objects
 Authorized users can create new objects like this:
