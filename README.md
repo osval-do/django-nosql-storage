@@ -1,7 +1,6 @@
 # Django NoSQL user document storage
 Django app that provides a simple REST API for storing and querying JSON documents.
-Designed specially for cases where model schema is too variable or where the frontend is
-in charge of the schema of the stored data (backend as a service).
+Designed specially for cases where model schema is too variable or where the frontend is in charge of the schema of the stored data (backend as a service). 
 Notice that the word "document" and "object" are used interchangeably in this readme.
 
 ## Features
@@ -153,7 +152,7 @@ The basic is the list of permissions `view_object`, `change_object` and `delete_
 curl -X POST -H "Content-Type: application/json" -d {{'{"view_object":{"users":["userB"]} }'}} {{http://yourdomain.com/api/objects/1/perms/}}
 ```
 
-The permission endpoint **always** adds the permissions passed, unless the property `clear` is passed as true, then any permission is removed before adding the new ones.
+The permission endpoint **always** adds the permissions passed, unless the property `clear` is passed as true, then any existing permission is deleted before adding the new ones.
 
 The endpoint expects a json with the list of permissions with the users, groups or anonymous user  assigned (named 'AnonymousUser') to each, like this:
 ```json
